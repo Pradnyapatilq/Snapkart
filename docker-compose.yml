@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: snapkart
+      POSTGRES_PASSWORD: snapkart
+      POSTGRES_DB: snapkart
+    ports:
+      - "5432:5432"
+    volumes:
+      - snapkart-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U snapkart -d snapkart"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  snapkart-postgres:
